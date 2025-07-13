@@ -3,50 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Splitter</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Smart Text Splitter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom styles for the Inter font and general body styling */
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5; /* Light gray background */
+            font-family: 'Inter', sans-serif; /* Primary font */
+            background-color: #f0f4f8; /* Softer, slightly cooler background */
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Align to start to prevent content from being too centered vertically on large screens */
-            min-height: 100vh; /* Minimum height of the viewport */
-            padding: 2rem; /* Padding around the main content */
-            box-sizing: border-box; /* Include padding in element's total width and height */
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 4rem 2rem; /* Increased vertical padding for more air */
+            box-sizing: border-box;
+        }
+
+        /* Applying Plus Jakarta Sans to headings for a modern contrast */
+        h1, h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Custom scrollbar for pre tags - optional, but can improve look */
+        pre::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        pre::-webkit-scrollbar-thumb {
+            background-color: #a7a7a7; /* Darker gray for better visibility */
+            border-radius: 4px;
+        }
+        pre::-webkit-scrollbar-track {
+            background-color: #e2e8f0; /* Lighter background for track */
+            border-radius: 4px;
+        }
+
+        /* Subtle gradient for the main button */
+        .gradient-button {
+            background: linear-gradient(to right bottom, #3b82f6, #2563eb); /* Blue 500 to Blue 700 */
+            transition: all 0.3s ease-in-out;
+        }
+        .gradient-button:hover {
+            background: linear-gradient(to right bottom, #2563eb, #1e40af); /* Darker blue on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+        }
+        .gradient-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
-    <div class="container mx-auto p-6 bg-white rounded-lg shadow-xl max-w-4xl w-full">
-        <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-8">Text Splitter for Programmers</h1>
+    <div class="container mx-auto p-10 bg-white rounded-3xl shadow-2xl max-w-4xl w-full border border-gray-100 transform transition-transform duration-300 ease-out hover:scale-[1.005]">
+        <h1 class="text-5xl md:text-6xl font-extrabold text-center text-gray-800 mb-6 leading-tight">
+            <span class="block text-gray-600 text-3xl font-normal mb-2">Introducing the</span>
+            Smart <span class="text-blue-600">Text Splitter</span>
+        </h1>
+        <p class="text-center text-gray-500 mb-12 text-xl max-w-2xl mx-auto">Effortlessly divide any text or code into manageable sections. Perfect for large documents, code snippets, or long messages.</p>
 
-        <!-- Input Section -->
-        <div class="mb-8">
-            <label for="inputText" class="block text-lg font-medium text-gray-700 mb-2">Paste your text/code here:</label>
-            <textarea id="inputText" rows="10" class="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800 bg-gray-50 resize-y" placeholder="Enter your long text or code here..."></textarea>
+        <div class="mb-12">
+            <label for="inputText" class="block text-lg font-medium text-gray-700 mb-4">Paste your text or code here:</label>
+            <textarea id="inputText" rows="12" class="w-full p-6 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-200 focus:border-blue-500 text-gray-800 bg-gray-50 resize-y text-base shadow-inner-md" placeholder="Enter your long text, document, or code here..."></textarea>
         </div>
 
-        <div class="flex flex-col sm:flex-row items-center justify-between mb-8 space-y-4 sm:space-y-0 sm:space-x-4">
+        <div class="flex flex-col sm:flex-row items-center justify-between mb-12 space-y-8 sm:space-y-0 sm:space-x-8">
             <div class="w-full sm:w-auto flex-grow">
-                <label for="numParts" class="block text-lg font-medium text-gray-700 mb-2">Number of parts:</label>
-                <input type="number" id="numParts" value="2" min="1" class="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800 bg-gray-50" placeholder="e.g., 2, 3, 4">
+                <label for="numParts" class="block text-lg font-medium text-gray-700 mb-4">Divide into how many parts?</label>
+                <input type="number" id="numParts" value="2" min="1" class="w-full p-6 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-200 focus:border-blue-500 text-gray-800 bg-gray-50 text-base shadow-inner-md" placeholder="e.g., 2, 3, 4">
             </div>
-            <button id="splitButton" class="w-full sm:w-auto px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-300 ease-in-out transform hover:scale-105">
-                Split Text
+            <button id="splitButton" class="w-full sm:w-auto px-12 py-6 gradient-button text-white font-bold rounded-2xl shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2 text-xl transform">
+                Split Text Now
             </button>
         </div>
 
-        <!-- Output Section -->
-        <div id="outputContainer" class="mt-8 space-y-6">
-            <!-- Split parts will be displayed here -->
-        </div>
+        <div id="outputContainer" class="mt-12 space-y-10">
+            </div>
 
-        <!-- Message Box for copy confirmation -->
-        <div id="messageBox" class="fixed bottom-6 right-6 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg hidden transition-opacity duration-300 ease-in-out opacity-0">
+        <div id="messageBox" class="fixed bottom-10 right-10 bg-green-600 text-white px-8 py-5 rounded-2xl shadow-xl hidden transition-all duration-300 ease-out opacity-0 translate-y-6">
             Text copied to clipboard!
         </div>
     </div>
@@ -62,29 +96,36 @@
             // Function to show a temporary message
             function showMessage(message, type = 'success') {
                 messageBox.textContent = message;
-                messageBox.className = fixed bottom-6 right-6 px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300 ease-in-out opacity-0; // Reset classes
+                messageBox.classList.remove('hidden', 'bg-green-600', 'bg-red-600', 'opacity-0', 'translate-y-6');
+                messageBox.classList.add('flex', 'items-center', 'justify-center'); 
                 if (type === 'success') {
-                    messageBox.classList.add('bg-green-600', 'text-white');
+                    messageBox.classList.add('bg-green-600');
                 } else if (type === 'error') {
-                    messageBox.classList.add('bg-red-600', 'text-white');
+                    messageBox.classList.add('bg-red-600');
                 }
-                messageBox.classList.remove('hidden');
+                
+                // Animate in
                 setTimeout(() => {
-                    messageBox.classList.add('opacity-100');
-                }, 10); // Small delay to trigger transition
+                    messageBox.classList.add('opacity-100', 'translate-y-0');
+                }, 10);
+
+                // Animate out after 2.5 seconds
                 setTimeout(() => {
-                    messageBox.classList.remove('opacity-100');
-                    messageBox.classList.add('opacity-0');
+                    messageBox.classList.remove('opacity-100', 'translate-y-0');
+                    messageBox.classList.add('opacity-0', 'translate-y-6');
                     setTimeout(() => {
                         messageBox.classList.add('hidden');
                     }, 300); // Hide after transition
-                }, 2000); // Message visible for 2 seconds
+                }, 2500); 
             }
 
             // Function to copy text to clipboard
             function copyToClipboard(text) {
                 const textarea = document.createElement('textarea');
                 textarea.value = text;
+                textarea.setAttribute('readonly', ''); // Make it read-only to prevent iOS keyboard pop-up
+                textarea.style.position = 'absolute';
+                textarea.style.left = '-9999px'; // Move out of screen
                 document.body.appendChild(textarea);
                 textarea.select();
                 try {
@@ -106,7 +147,7 @@
                 outputContainer.innerHTML = '';
 
                 if (!text.trim()) {
-                    showMessage('Please enter some text to split.', 'error');
+                    showMessage('Oops! Please enter some text to split.', 'error');
                     return;
                 }
 
@@ -125,17 +166,17 @@
 
                     // Create a div for each part
                     const partDiv = document.createElement('div');
-                    partDiv.className = 'bg-gray-100 p-5 rounded-lg shadow-sm border border-gray-200';
+                    partDiv.className = 'bg-white p-8 rounded-2xl shadow-lg border border-gray-200 transform transition-transform duration-200 ease-out hover:scale-[1.01]'; /* Card style for output parts */
 
                     // Part number heading
                     const partHeader = document.createElement('h3');
-                    partHeader.className = 'text-xl font-semibold text-gray-800 mb-3 flex justify-between items-center';
-                    partHeader.textContent = Part ${i + 1};
+                    partHeader.className = 'text-2xl font-bold text-gray-800 mb-5 flex justify-between items-center';
+                    partHeader.innerHTML = `Part ${i + 1} <span class="text-sm font-normal text-gray-500 ml-2">(~${partText.length} characters)</span>`; /* Added character count */
 
                     // Copy button for the part
                     const copyBtn = document.createElement('button');
-                    copyBtn.className = 'px-4 py-2 bg-green-500 text-white text-sm font-medium rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition duration-200 ease-in-out';
-                    copyBtn.textContent = 'Copy';
+                    copyBtn.className = 'px-6 py-3 bg-blue-500 text-white text-base font-semibold rounded-xl shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 transition duration-200 ease-in-out transform hover:-translate-y-0.5 active:scale-95'; 
+                    copyBtn.textContent = 'Copy Part';
                     copyBtn.addEventListener('click', () => {
                         copyToClipboard(partText);
                     });
@@ -145,7 +186,7 @@
 
                     // Pre tag for displaying the code/text part
                     const preTag = document.createElement('pre');
-                    preTag.className = 'whitespace-pre-wrap break-words text-sm text-gray-900 bg-white p-3 rounded-md border border-gray-300 overflow-auto max-h-60'; // Added max-height and overflow
+                    preTag.className = 'whitespace-pre-wrap break-words text-sm text-gray-900 bg-gray-50 p-5 rounded-xl border border-gray-200 overflow-auto max-h-72 font-mono leading-relaxed'; /* Increased padding, max-height, added leading-relaxed */
                     preTag.textContent = partText;
                     partDiv.appendChild(preTag);
 
@@ -156,5 +197,4 @@
     </script>
 </body>
 </html>
-
 
